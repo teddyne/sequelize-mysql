@@ -1,19 +1,32 @@
-const db = require('../models')
-const model = require('../models/user.model')
-console.log('model', model)
-const User = model(db.sequelize, db.Sequelize)
+const { Model } = require('sequelize')
 
-module.exports = (sequelize, Sequelize) => {
-  const Book = sequelize.define('book', {
+module.exports = (sequelize, DataTypes) => {
+  class Book extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
+    static associate(models) {
+      Book.belongsTo(models.User, {
+        foreignKey: {
+          name: 'userId'
+        }
+      })
+    }
+  }
+
+  Book.init({
     name: {
-      type: Sequelize.STRING
+      type: DataTypes.STRING
     },
     author: {
-      type: Sequelize.STRING
+      type: DataTypes.STRING
     }
-  })
-  Book.belongsTo(User, {
-    foreignKey: 'userId'
+  }, {
+    // Other model options go here
+    sequelize, // We need to pass the connection instance
+    modelName: 'Book' // We need to choose the model name
   })
   return Book
 }

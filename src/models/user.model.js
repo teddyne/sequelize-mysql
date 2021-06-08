@@ -1,20 +1,32 @@
-// const db = require('../models')
-// const model = require('../models/book.model')
+const { Model } = require('sequelize')
 
-// console.log('user', model)
-// const Book = model(db.sequelize, db.Sequelize)
+module.exports = (sequelize, DataTypes) => {
+  class User extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
+    static associate(models) {
+      User.hasMany(models.Book, {
+        foreignKey: {
+          name: 'userId'
+        }
+      })
+    }
+  }
 
-module.exports = (sequelize, Sequelize) => {
-  const User = sequelize.define('user', {
+  User.init({
     name: {
-      type: Sequelize.STRING
+      type: DataTypes.STRING
     },
     age: {
-      type: Sequelize.STRING
+      type: DataTypes.INTEGER
     }
+  }, {
+    // Other model options go here
+    sequelize, // We need to pass the connection instance
+    modelName: 'User' // We need to choose the model name
   })
-  //   User.hasMany(Book, {
-  //     foreignKey: 'userId'
-  //   })
   return User
 }

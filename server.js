@@ -1,5 +1,6 @@
 const express = require('express')
 const cors = require('cors')
+require('dotenv').config()
 
 const app = express()
 
@@ -10,13 +11,13 @@ var corsOptions = {
 app.use(cors(corsOptions))
 app.use(express.json())
 
-//const db = require('./src/models')
+const db = require('./src/models')
 
 //db.sequelize.sync()
 //drop the table if it already exists
-// db.sequelize.sync({ force: true }).then(() => {
-//   console.log('Drop and re-sync db.')
-// })
+db.sequelize.sync({ force: true }).then(() => {
+  console.log('Drop and re-sync db.')
+})
 
 require('./src/routes/book.routes')(app)
 
