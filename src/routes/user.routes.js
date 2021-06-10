@@ -1,6 +1,6 @@
 module.exports = (app) => {
-  const controller = require('../controllers/book.controller.js')
+  const controller = require('../controllers/user.controller.js')
   var router = require('express').Router()
   router.post('/', controller.create)
-  app.use('/api/books', router)
+  app.use('/api/users', router)
 }

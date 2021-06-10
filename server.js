@@ -1,25 +1,18 @@
 const express = require('express')
-const cors = require('cors')
 require('dotenv').config()
-
 const app = express()
-
-var corsOptions = {
-  origin: 'http://localhost:5000'
-}
-
-app.use(cors(corsOptions))
 app.use(express.json())
 
 const db = require('./src/models')
 
-//db.sequelize.sync()
-//drop the table if it already exists
-db.sequelize.sync({ force: true }).then(() => {
-  console.log('Drop and re-sync db.')
-})
+// db.sequelize.sync()
+// NOTE: DROP TABLE IF EXIST ALREADY
+// db.sequelize.sync({ force: true }).then(() => {
+//   console.log('Drop and re-sync db.')
+// })
 
 require('./src/routes/book.routes')(app)
+require('./src/routes/user.routes')(app)
 
 // set port, listen for requests
 const PORT = process.env.PORT || 5000
