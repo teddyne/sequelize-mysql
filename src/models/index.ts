@@ -1,23 +1,23 @@
-const fs = require('fs')
-const path = require('path')
-const Sequelize = require('sequelize')
+import fs from 'fs'
+import path from 'path'
+import { Sequelize, DataTypes } from 'sequelize'
 const env = process.env.NODE_ENV || 'development'
 const config = require(__dirname + '/../config/config.json')[env]
 const basename = path.basename(__filename)
 
 const sequelize = new Sequelize(config.database, config.username, config.password, config)
 
-const db = {}
+const db: any = {}
 
 db.Sequelize = Sequelize
 db.sequelize = sequelize
 
 fs.readdirSync(__dirname)
-  .filter((file) => {
+  .filter((file: any) => {
     return file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js'
   })
-  .forEach((file) => {
-    const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes)
+  .forEach((file: any) => {
+    const model = require(path.join(__dirname, file))(sequelize, DataTypes)
     db[model.name] = model
   })
 

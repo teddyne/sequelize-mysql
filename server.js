@@ -6,10 +6,10 @@ app.use(express.json())
 const db = require('./src/models')
 
 // db.sequelize.sync()
-// NOTE: DROP TABLE IF EXIST ALREADY
-// db.sequelize.sync({ force: true }).then(() => {
-//   console.log('Drop and re-sync db.')
-// })
+//NOTE: DROP TABLE IF EXIST ALREADY
+db.sequelize.sync({ force: true }).then(() => {
+  console.log('Drop and re-sync db.')
+})
 
 require('./src/routes/book.routes')(app)
 require('./src/routes/user.routes')(app)
